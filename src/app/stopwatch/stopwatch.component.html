@@ -1,1 +1,9 @@
-<p>stopwatch works!</p>
+<div class="card">
+    <div class="inside">
+        <h2>STOPWATCH</h2>
+        <p class="timer">{{ formatTime(timer) }}</p>
+        <button class="btn btn-success" (click)="startTimer()" [disabled]="running">Start</button>
+        <button class="btn btn-warning" (click)="pauseTimer()" [disabled]="!running">Pause</button>
+        <button class="btn btn-danger" (click)="resetTimer()">Reset</button>
+    </div>
+</div>

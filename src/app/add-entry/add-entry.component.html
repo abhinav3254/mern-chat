@@ -2,22 +2,22 @@
     <form #myForm="ngForm" (ngSubmit)="onSubmit(myForm)">
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Question Name</label>
-            <input type="email" name="question_name" ngModel class="form-control" id="exampleFormControlInput1"
+            <input type="email" name="questionName" ngModel class="form-control" id="exampleFormControlInput1"
                 placeholder="Question Name">
         </div>
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Problem Link</label>
-            <input type="email" name="problem_link" ngModel class="form-control" id="exampleFormControlInput1"
+            <input type="email" name="problemLink" ngModel class="form-control" id="exampleFormControlInput1"
                 placeholder="Problem Link">
         </div>
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Topic Name</label>
-            <input type="email" name="topic_name" ngModel class="form-control" id="exampleFormControlInput1"
+            <input type="email" name="topicName" ngModel class="form-control" id="exampleFormControlInput1"
                 placeholder="Topic Name">
         </div>
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">New Topic Learnt</label>
-            <input type="email" name="new_topic_learnt" ngModel class="form-control" id="exampleFormControlInput1"
+            <input type="email" name="newTopicLearnt" ngModel class="form-control" id="exampleFormControlInput1"
                 placeholder="New Topic Learnt">
         </div>
         <div class="horizontal-align">
@@ -40,7 +40,7 @@
         </div>
 
         <div class="horizontal-align">
-            <select name="optimized_solution" ngModel class="form-select" aria-label="Default select example">
+            <select name="optimizedSolution" ngModel class="form-select" aria-label="Default select example">
                 <option disabled selected>Optimized Solution</option>
                 <option value="yes">Yes</option>
                 <option value="no">No</option>
@@ -57,13 +57,13 @@
 
             <div class="mb-3 beat">
                 <label for="exampleFormControlInput1" class="form-label">Beats in time</label>
-                <input name="beats_in_time" ngModel type="email" class="form-control" id="exampleFormControlInput1"
+                <input name="beatsInTime" ngModel type="email" class="form-control" id="exampleFormControlInput1"
                     placeholder="Beats in time">
             </div>
 
             <div class="mb-3 beat">
                 <label for="exampleFormControlInput1" class="form-label">Beats in space</label>
-                <input name="beats_in_space" ngModel type="email" class="form-control" id="exampleFormControlInput1"
+                <input name="beatsInSpace" ngModel type="email" class="form-control" id="exampleFormControlInput1"
                     placeholder="Beats in space">
             </div>
 
@@ -71,7 +71,7 @@
 
         <div class="mb-3">
             <label for="exampleFormControlTextarea1" class="form-label">Comments</label>
-            <textarea name="Comments" ngModel class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            <textarea name="comments" ngModel class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
         </div>
 
         <div style="text-align: center;">
