@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-add-entry',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./add-entry.component.css']
 })
 export class AddEntryComponent {
+
+  onSubmit(form: NgForm) {
+    console.log(form.value)
+  }
 
 }

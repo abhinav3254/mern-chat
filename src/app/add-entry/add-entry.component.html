@@ -1,29 +1,82 @@
 <div class="card">
-    <form>
+    <form #myForm="ngForm" (ngSubmit)="onSubmit(myForm)">
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Question Name</label>
-            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Question Name">
+            <input type="email" name="question_name" ngModel class="form-control" id="exampleFormControlInput1"
+                placeholder="Question Name">
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Problem Link</label>
+            <input type="email" name="problem_link" ngModel class="form-control" id="exampleFormControlInput1"
+                placeholder="Problem Link">
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Topic Name</label>
+            <input type="email" name="topic_name" ngModel class="form-control" id="exampleFormControlInput1"
+                placeholder="Topic Name">
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">New Topic Learnt</label>
+            <input type="email" name="new_topic_learnt" ngModel class="form-control" id="exampleFormControlInput1"
+                placeholder="New Topic Learnt">
         </div>
         <div class="horizontal-align">
-            <select class="form-select" aria-label="Default select example">
+            <select name="status" ngModel class="form-select" aria-label="Default select example">
                 <option disabled selected>Select Status</option>
                 <option value="solved">Solved</option>
                 <option value="unsolved">Unsolved</option>
             </select>
-            <select class="form-select" aria-label="Default select example">
+            <select name="revision" ngModel class="form-select" aria-label="Default select example">
                 <option disabled selected>Revision</option>
                 <option value="need">Needed</option>
                 <option value="not_need">Not Needed</option>
             </select>
-            <select class="form-select" aria-label="Default select example">
+            <select name="platform" ngModel class="form-select" aria-label="Default select example">
+                <option disabled selected>Platform</option>
+                <option value="leetcode">Leetcode</option>
+                <option value="codeforces">codeforces</option>
+                <option value="codechef">codechef</option>
+            </select>
+        </div>
+
+        <div class="horizontal-align">
+            <select name="optimized_solution" ngModel class="form-select" aria-label="Default select example">
                 <option disabled selected>Optimized Solution</option>
                 <option value="yes">Yes</option>
                 <option value="no">No</option>
             </select>
+            <select name="type" ngModel class="form-select" aria-label="Default select example">
+                <option disabled selected>Type</option>
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+            </select>
         </div>
+
+        <div class="horizontal-align">
+
+            <div class="mb-3 beat">
+                <label for="exampleFormControlInput1" class="form-label">Beats in time</label>
+                <input name="beats_in_time" ngModel type="email" class="form-control" id="exampleFormControlInput1"
+                    placeholder="Beats in time">
+            </div>
+
+            <div class="mb-3 beat">
+                <label for="exampleFormControlInput1" class="form-label">Beats in space</label>
+                <input name="beats_in_space" ngModel type="email" class="form-control" id="exampleFormControlInput1"
+                    placeholder="Beats in space">
+            </div>
+
+        </div>
+
         <div class="mb-3">
             <label for="exampleFormControlTextarea1" class="form-label">Comments</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            <textarea name="Comments" ngModel class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
         </div>
+
+        <div style="text-align: center;">
+            <button class="btn btn-primary">submit</button>
+        </div>
+
     </form>
 </div>
