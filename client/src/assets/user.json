@@ -1,0 +1,122 @@
+[
+    {
+        "name": "Guy Hawkins",
+        "message": "Thanks! Looks great!",
+        "time": "1 min",
+        "read": true
+    },
+    {
+        "name": "Jane Doe",
+        "message": "Hello there!",
+        "time": "5 mins",
+        "read": false
+    },
+    {
+        "name": "John Smith",
+        "message": "How are you?",
+        "time": "10 mins",
+        "read": false
+    },
+    {
+        "name": "Alice Johnson",
+        "message": "I'm fine, thank you!",
+        "time": "15 mins",
+        "read": true
+    },
+    {
+        "name": "Bob Brown",
+        "message": "Can you call me?",
+        "time": "20 mins",
+        "read": false
+    },
+    {
+        "name": "Emily Taylor",
+        "message": "Sure, I'll call you.",
+        "time": "25 mins",
+        "read": true
+    },
+    {
+        "name": "David Wilson",
+        "message": "What's the plan for today?",
+        "time": "30 mins",
+        "read": false
+    },
+    {
+        "name": "Olivia Martinez",
+        "message": "Let's meet at 3 PM.",
+        "time": "35 mins",
+        "read": true
+    },
+    {
+        "name": "Sophia Anderson",
+        "message": "Sounds good!",
+        "time": "40 mins",
+        "read": false
+    },
+    {
+        "name": "William Garcia",
+        "message": "See you then!",
+        "time": "45 mins",
+        "read": true
+    },
+    {
+        "name": "Liam Clark",
+        "message": "Good morning!",
+        "time": "50 mins",
+        "read": true
+    },
+    {
+        "name": "Charlotte Walker",
+        "message": "Did you finish the report?",
+        "time": "55 mins",
+        "read": false
+    },
+    {
+        "name": "Mia Perez",
+        "message": "Yes, it's done!",
+        "time": "1 hr",
+        "read": true
+    },
+    {
+        "name": "Ethan Hall",
+        "message": "Great job!",
+        "time": "1 hr 5 mins",
+        "read": false
+    },
+    {
+        "name": "Isabella Green",
+        "message": "Thank you!",
+        "time": "1 hr 10 mins",
+        "read": true
+    },
+    {
+        "name": "James Young",
+        "message": "When is the meeting?",
+        "time": "1 hr 15 mins",
+        "read": false
+    },
+    {
+        "name": "Ava King",
+        "message": "It's at 2 PM.",
+        "time": "1 hr 20 mins",
+        "read": true
+    },
+    {
+        "name": "Benjamin Baker",
+        "message": "See you there!",
+        "time": "1 hr 25 mins",
+        "read": false
+    },
+    {
+        "name": "Amelia Hill",
+        "message": "Can you bring the documents?",
+        "time": "1 hr 30 mins",
+        "read": true
+    },
+    {
+        "name": "Lucas Wright",
+        "message": "Sure, I'll bring them.",
+        "time": "1 hr 35 mins",
+        "read": false
+    }
+]

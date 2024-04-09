@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Auth from './components/Auth';
+import Home from './components/Home';
 
 const App = () => {
 
@@ -9,7 +10,8 @@ const App = () => {
 
   return (
     <div>
-      <Auth />
+      {/* <Auth /> */}
+      <Home />
     </div>
   );
 }
