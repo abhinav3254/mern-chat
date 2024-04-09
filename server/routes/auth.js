@@ -6,9 +6,13 @@ router.get('/',(req,res)=>{
 	res.json({name:'router is working fine'})
 });
 
+
+/**
+ * This method is for login of user
+ */
 router.post('/login',(req,res)=>{
-	const {username,password} = req.body;
-	console.log(username+' and '+password);
+	const {email,password} = req.body;
+	res.json(req.body);
 });
 
 

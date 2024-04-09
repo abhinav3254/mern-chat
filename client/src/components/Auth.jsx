@@ -1,4 +1,5 @@
 import { useState } from "react"
+import axios from "axios";
 
 const Auth = () => {
     const [loginPage, setLoginPage] = useState(true);
@@ -9,12 +10,9 @@ const Auth = () => {
     /**
      * this method will make an api call to the login route
      */
-    const loginUser = () => {
-        const loginData = {
-            email: email,
-            password: password
-        }
-        console.log(loginData);
+    const loginUser = async () => {
+        const response = await axios.post('auth/login', { email, password });
+        console.log(response.data);
     }
 
 
