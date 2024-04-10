@@ -3,7 +3,9 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 
-
+/**
+ * connecting server to cloud
+ */
 const uri = process.env.DB_URL;
 mongoose.connect(uri)
     .then(() => console.log(`connected to mongodb cloud`))
