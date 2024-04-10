@@ -19,13 +19,9 @@ const Auth = () => {
     /**
      * this method will make an api call to the signup route
      */
-    const signup = () => {
-        const signupData = {
-            name: name,
-            email: email,
-            password: password
-        }
-        console.log(signupData);
+    const signup = async () => {
+        const response = await axios.post('auth/register', { name, email, password });
+        console.log(response.data);
     }
 
     return (

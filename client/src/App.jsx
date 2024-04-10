@@ -10,8 +10,8 @@ const App = () => {
 
   return (
     <div>
-      {/* <Auth /> */}
-      <Home />
+      <Auth />
+      {/* <Home /> */}
     </div>
   );
 }
