@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
+const { generateToken } = require('../jwt/jwt');
+const jwt = require('jsonwebtoken');
 
 const saltRounds = 10;
 
@@ -23,10 +25,18 @@ router.post('/login', async (req, res) => {
 		}
 		const isPasswordSame = await comparePassword(password, userDetails.password);
 		if (isPasswordSame) {
-			return res.status(200).json({ message: 'ok' });
+			const user = {
+				id: userDetails._id,
+				email: userDetails.email
+			}
+			const token = generateToken(user);
+			return res.cookie('token', token, { sameSite: 'none', secure: false }).status(201).json({
+				id: user.id,
+			});
 		}
 		return res.status(400).json({ message: 'wrong password' });
 	} catch (err) {
+		console.log(err);
 		return res.status(500).json({ message: 'internal server error' });
 	}
 });

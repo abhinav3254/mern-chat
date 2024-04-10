@@ -11,8 +11,14 @@ const Auth = () => {
      * this method will make an api call to the login route
      */
     const loginUser = async () => {
-        const response = await axios.post('auth/login', { email, password });
-        console.log(response.data);
+        try {
+            const { data } = await axios.post('auth/login', { email, password }, {
+                withCredentials: true
+            });
+            console.log(data);
+        } catch (err) {
+            console.log(err);
+        }
     }
 
 
