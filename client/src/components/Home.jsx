@@ -59,11 +59,29 @@ const Home = () => {
                     </div>
                 </div>
                 {/* chat body */}
-                <div className="h-full"></div>
+                <div className="h-full">
+
+                    {/* message from somewhere else */}
+                    <div className="flex justify-start py-1">
+                        <div className="w-fit py-1 px-2 m-1 rounded-sm text-sm text-white flex items-center bg-blue-500">
+                            <p className="mx-2">Hi,Is everything working</p>
+                        </div>
+                    </div>
+                    {/* message from me */}
+                    <div className="flex justify-end items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                        </svg>
+                        <div className="border w-fit py-1 px-2 m-1 rounded-sm text-sm text-gray-500 flex items-center">
+                            <p className="mx-2">Yeah, Everything is working fine</p>
+                        </div>
+                    </div>
+                </div>
                 {/* message type */}
                 <div className="flex w-full h-10 text-blue-500 items-center pr-2">
                     <input type="text" placeholder="message" className="w-full h-8 border rounded-sm outline-none px-1" />
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 hover:cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 ml-2 hover:cursor-pointer">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
                     </svg>
                 </div>
