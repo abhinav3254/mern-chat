@@ -2,7 +2,7 @@ const express = require('express');
 const authRoutes = require('./routes/auth');
 const cors = require('cors');
 const dotenv = require('dotenv');
-
+require('./database/db_config');
 
 const app = express();
 // Here we are telling node to use json
