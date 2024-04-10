@@ -1,7 +1,7 @@
 import avtar from '../assets/avtar.svg';
 const Contacts = ({ user }) => {
     return (
-        <div className='flex border my-1 p-1 items-center hover:cursor-pointer'>
+        <div className='flex border my-1 p-1 items-center hover:cursor-pointer rounded-sm hover:bg-gray-100'>
             <img src={avtar} alt=""
                 className='w-10 h-10 rounded-full mx-1'
             />
