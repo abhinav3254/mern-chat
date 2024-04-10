@@ -15,6 +15,13 @@ router.post('/login',(req,res)=>{
 	res.json(req.body);
 });
 
+/**
+ * This route will let register the user
+ */
+router.post('/register',(req,res)=>{
+	res.json(req.body);
+});
+
 
 
 module.exports = router;
