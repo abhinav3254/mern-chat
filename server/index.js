@@ -10,7 +10,9 @@ const app = express();
 app.use(express.json());
 
 // using cors
-app.use(cors());
+app.use(cors({
+	origin: "*"
+}));
 // setting up .env
 dotenv.config();
 

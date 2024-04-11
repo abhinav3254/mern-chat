@@ -30,9 +30,7 @@ router.post('/login', async (req, res) => {
 				email: userDetails.email
 			}
 			const token = generateToken(user);
-			return res.cookie('token', token, { sameSite: 'none', secure: false }).status(201).json({
-				id: user.id,
-			});
+			return res.status(200).json({ token: token });
 		}
 		return res.status(400).json({ message: 'wrong password' });
 	} catch (err) {

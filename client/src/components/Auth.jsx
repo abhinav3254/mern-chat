@@ -12,12 +12,15 @@ const Auth = () => {
      */
     const loginUser = async () => {
         try {
-            const { data } = await axios.post('auth/login', { email, password }, {
-                withCredentials: true
-            });
-            console.log(data);
+            const response = await axios.post('auth/login', { email, password });
+
+            if (response.status === 200) {
+                const token = response.data.token;
+                // for time being I am saving token in session storage
+                sessionStorage.setItem('token', token);
+            }
         } catch (err) {
-            console.log(err);
+            alert(err.response.statusText);
         }
     }
 
