@@ -1,7 +1,7 @@
 import { useState } from "react"
 import axios from "axios";
 
-const Auth = () => {
+const Auth = ({ logInStatus }) => {
     const [loginPage, setLoginPage] = useState(true);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -18,6 +18,7 @@ const Auth = () => {
                 const token = response.data.token;
                 // for time being I am saving token in session storage
                 sessionStorage.setItem('token', token);
+                logInStatus(true);
             }
         } catch (err) {
             alert(err.response.statusText);
