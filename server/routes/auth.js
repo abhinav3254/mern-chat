@@ -30,7 +30,11 @@ router.post('/login', async (req, res) => {
 				email: userDetails.email
 			}
 			const token = generateToken(user);
-			return res.status(200).json({ token: token });
+			const response = {
+				userId: userDetails._id,
+				token: token
+			}
+			return res.status(200).json(response);
 		}
 		return res.status(400).json({ message: 'wrong password' });
 	} catch (err) {

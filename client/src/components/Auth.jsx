@@ -16,8 +16,10 @@ const Auth = ({ logInStatus }) => {
 
             if (response.status === 200) {
                 const token = response.data.token;
+                const userId = response.data.userId;
                 // for time being I am saving token in session storage
                 sessionStorage.setItem('token', token);
+                sessionStorage.setItem('id', userId);
                 logInStatus(true);
             }
         } catch (err) {

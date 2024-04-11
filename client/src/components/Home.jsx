@@ -1,8 +1,42 @@
 import Contacts from "./Contacts";
 import avtar from '../assets/avtar.svg';
-import users from '../assets/user.json'
+import users from '../assets/user.json';
+import { useEffect, useState } from "react"
 
 const Home = () => {
+    const [message, setMessage] = useState('');
+    const [messages, setMessages] = useState([]);
+    const [people, setPeople] = useState([]);
+
+    // get all the contacts
+    // useEffect(() => {
+    //     const res = await
+    // }, []);
+
+    // websocket
+    useEffect(() => {
+        const ws = new WebSocket('ws://localhost:4000');
+        ws.onopen = () => {
+            console.log('connected to web socket');
+        }
+        ws.onclose = () => {
+            console.log('WebSocket disconnected');
+        };
+
+        // Clean WebSocket connection on component unmount
+        return () => {
+            ws.close();
+        };
+    }, []);
+
+
+    // sending message button
+    const sendMessage = () => {
+        messages.push(message);
+        console.log(messages);
+        setMessage('');
+    }
+
     return (
         <div
             className="flex h-screen"
@@ -80,8 +114,8 @@ const Home = () => {
                 </div>
                 {/* message type */}
                 <div className="flex w-full h-10 text-blue-500 items-center pr-2">
-                    <input type="text" placeholder="message" className="w-full h-8 border rounded-sm outline-none px-1" />
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 ml-2 hover:cursor-pointer">
+                    <input value={message} onChange={(e) => setMessage(e.target.value)} type="text" placeholder="message" className="w-full h-8 border rounded-sm outline-none px-1" />
+                    <svg onClick={sendMessage} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 ml-2 hover:cursor-pointer">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
                     </svg>
                 </div>
