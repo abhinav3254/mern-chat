@@ -1,17 +1,23 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import SelectedUserNav from './SelectedUserNav'
 import MessageContainer from './MessageContainer'
+import { SelectedUserContext } from '../pages/Home';
+
 
 const SelectedUser = () => {
 
     const [message, setMessage] = useState('');
+    const selectedUser = useContext(SelectedUserContext);
+
 
     const sendMessage = () => {
-        console.log(message);
-
-        messageJson = {
-
+        const messageJson = {
+            recipient: selectedUser._id,
+            sender: sessionStorage.getItem('id'),
+            message: message,
+            time: new Date().toISOString(),
         }
+        console.log(messageJson);
 
         setMessage('');
     }

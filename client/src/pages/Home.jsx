@@ -9,6 +9,9 @@ export const SelectedUserContext = createContext();
 
 const Home = () => {
 
+    const [selectedUser, setSelectedUser] = useState(null);
+    const [activeUser, setActiveUser] = useState([]);
+
     useEffect(() => {
         const socket = io("http://localhost:8080", {
             extraHeaders: {
@@ -20,20 +23,20 @@ const Home = () => {
             console.log(socket.id); // x8WIv7-mJelg7on_ALbx
         });
 
-        // socket.on("online", (data) => {
-        //     console.log('getting data', data);
-        // })
+        socket.on("activeUsers", (data) => {
+            setActiveUser(data);
+        })
+
 
 
     }, []);
 
-    const [selectedUser, setSelectedUser] = useState(null);
 
     return (
         <SelectedUserContext.Provider value={selectedUser}>
             <div className='flex'>
                 <div className='w-1/5'>
-                    <Sidebar setSelectedUser={setSelectedUser} />
+                    <Sidebar setSelectedUser={setSelectedUser} activeUsers={activeUser} />
                 </div>
                 <div className='w-4/5'>
                     {selectedUser && (

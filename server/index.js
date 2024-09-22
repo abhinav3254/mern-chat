@@ -46,12 +46,10 @@ app.use(cors({
 app.use('/auth', authRoute);
 app.use('/user', validateToken, userRoute);
 
+const activeUsers = [];
 
 io.on("connection", (socket) => {
     const token = socket.handshake.headers['authorization'];
-
-    console.log('socket connected ', socket.id);
-
     // Ensure token is valid before parsing
     if (token) {
         // Remove "Bearer " if it's included
@@ -59,7 +57,7 @@ io.on("connection", (socket) => {
 
         const data = parseToken(tokenWithoutBearer);
         if (data.status) {
-            console.log('User ID:', data.id);
+            activeUsers.push({ userId: data.id, socketId: socket.id });
         } else {
             console.error('Invalid token');
             socket.disconnect(); // Optionally disconnect the socket
@@ -71,8 +69,7 @@ io.on("connection", (socket) => {
         return;
     }
 
-    // Emit to all clients that a user connected
-    io.emit("listen", `User connected: ${socket.id}`);
+    io.emit("activeUsers", activeUsers);
 
     // When a message is received from a client
     socket.on("message", (data) => {
@@ -84,9 +81,13 @@ io.on("connection", (socket) => {
 
     // Handle when a user disconnects
     socket.on("disconnect", () => {
-        console.log('socket disconnected ', socket.id);
+        // Remove user from activeUsers array by filtering out their socket ID
+        const index = activeUsers.findIndex(user => user.socketId === socket.id);
+        if (index !== -1) {
+            activeUsers.splice(index, 1);
+        }
         // Notify all clients that the user disconnected
-        io.emit("listen", `User disconnected: ${socket.id}`);
+        io.emit("activeUsers", activeUsers);
     });
 });
 

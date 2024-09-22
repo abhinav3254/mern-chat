@@ -33,7 +33,6 @@ function validateToken(req, res, next) {
 
 function parseToken(token) {
     try {
-        console.log('parsing token...')
         const result = jwt.verify(token, jwt_secret);
         if (!result) return { status: false };
         return { status: true, id: jwt.decode(token).userId };

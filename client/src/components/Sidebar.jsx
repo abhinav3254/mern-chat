@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import usersJson from '../assets/json/users.json';
 import axios from 'axios';
 
 
 
-const Sidebar = ({ setSelectedUser }) => {
+const Sidebar = ({ setSelectedUser, activeUsers }) => {
 
     const [search, setSearch] = useState('');
     const [users, setUsers] = useState([]);
@@ -13,11 +12,39 @@ const Sidebar = ({ setSelectedUser }) => {
         getAllUsers();
     }, []);
 
+    useEffect(() => {
+        if (activeUsers.length > 0) {
+            // Combine active and inactive users when activeUsers change
+            const combinedUsers = users.map(user => {
+                // Check if the user is active
+                const isActive = activeUsers.some(activeUser => activeUser.userId === user._id);
+
+                // Return user with status (active/inactive)
+                return { ...user, status: isActive ? 'active' : 'inactive' };
+            });
+
+            setUsers(combinedUsers); // Update users with active/inactive status
+        }
+    }, [activeUsers]); // Ensure useEffect runs when activeUsers or users change
+
     const getAllUsers = async () => {
         try {
-            const response = await axios.get('user/all');
-            setUsers(response.data);
-        } catch (err) { }
+            const response = await axios.get('/user/all');
+            const allUsers = response.data;
+
+            // Combine active and inactive users
+            const combinedUsers = allUsers.map(user => {
+                // Check if the user is active
+                const isActive = activeUsers.some(activeUser => activeUser.userId === user._id);
+
+                // Return user with status (active/inactive)
+                return { ...user, status: isActive ? 'active' : 'inactive' };
+            });
+
+            setUsers(combinedUsers); // Set combined users to state
+        } catch (err) {
+            console.error('Error fetching users', err);
+        }
     }
 
 
@@ -51,7 +78,7 @@ const Sidebar = ({ setSelectedUser }) => {
             <div className='h-[90%] flex flex-col w-full overflow-scroll mt-1'>
                 {filterNames().map((user) => (
                     <div key={user._id} className='my-[2px] p-1 flex items-center justify-start gap-1 hover:bg-gray-200 bg-gray-100 hover:cursor-pointer shadow-sm' onClick={() => { selectUser(user) }}>
-                        <div className='h-12 w-12'>
+                        <div className='h-12 w-12 relative'>
                             {/* if profile image is present */}
                             {user.profileImg && (
                                 <img className='h-full w-full rounded-full object-cover' src={user.profileImg} alt="" />
@@ -61,6 +88,12 @@ const Sidebar = ({ setSelectedUser }) => {
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-full w-full rounded-full object-cover text-red-500">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
                                 </svg>
+                            )}
+                            {user.status === 'active' && (
+                                <div className='bg-green-500 absolute h-2 w-2 rounded-full right-0 bottom-0'></div>
+                            )}
+                            {user.status === 'inactive' && (
+                                <div className='bg-yellow-500 absolute h-2 w-2 rounded-full right-0 bottom-0'></div>
                             )}
                         </div>
                         <div className='flex flex-col justify-start'>
