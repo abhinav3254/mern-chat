@@ -1,56 +1,108 @@
 const express = require('express');
-const authRoutes = require('./routes/auth');
-const cors = require('cors');
-const dotenv = require('dotenv');
-// importing websocket
-const WebSocket = require('ws');
-const User = require('./models/User');
-// importing database config
-require('./database/db_config');
-
 const app = express();
-// Here we are telling node to use json
+const { port } = require('./_config/config');
+const cors = require('cors');
+const os = require('os');
+const { delayRequest } = require('./middlewares/delay');
+const { parseToken } = require('./middlewares/jwt');
+
+const http = require('http');
+const server = http.createServer(app);
+
+const io = require('socket.io')(server, {
+    cors: {
+        origin: "*",
+        methods: ["GET", "POST"],
+        allowedHeaders: ["Content-Type", "Authorization"],
+        credentials: true
+    }
+});
+
+// connect to db
+const { connectDb } = require('./_config/db-connection');
+connectDb();
+
+// middleware
+const { validateToken } = require('./middlewares/jwt');
+
+
+// routes
+const authRoute = require('./routes/auth');
+const userRoute = require('./routes/userRoute');
+
+
 app.use(express.json());
-
-// using cors
 app.use(cors({
-	origin: "*"
+    origin: 'http://localhost:3000', // Specify the origin to allow
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Add other methods if needed
+    allowedHeaders: ['Content-Type', 'Authorization'], // Allow required headers
+    credentials: true // If you're handling credentials (cookies, HTTP authentication)
 }));
-// setting up .env
-dotenv.config();
-
-/**
- * in this file all the auth routes are defined
- */
-app.use('/api/v1/auth', authRoutes);
+// delay request for random time
+// app.use(delayRequest);
 
 
+app.use('/auth', authRoute);
+app.use('/user', validateToken, userRoute);
 
-/**
- * get the list of users
- */
-app.get('/users', async (req, res) => {
-	try {
-		const users = User.find();
-		return res.status(200).json(users);
-	} catch (errr) {
-		console.log(err);
-		return res.status(500).json({ message: 'something went wrong' });
-	}
+
+io.on("connection", (socket) => {
+    const token = socket.handshake.headers['authorization'];
+
+    console.log('socket connected ', socket.id);
+
+    // Ensure token is valid before parsing
+    if (token) {
+        // Remove "Bearer " if it's included
+        const tokenWithoutBearer = token.startsWith('Bearer ') ? token.split(' ')[1] : token;
+
+        const data = parseToken(tokenWithoutBearer);
+        if (data.status) {
+            console.log('User ID:', data.id);
+        } else {
+            console.error('Invalid token');
+            socket.disconnect(); // Optionally disconnect the socket
+            return;
+        }
+    } else {
+        console.error('No token provided');
+        socket.disconnect(); // Optionally disconnect the socket
+        return;
+    }
+
+    // Emit to all clients that a user connected
+    io.emit("listen", `User connected: ${socket.id}`);
+
+    // When a message is received from a client
+    socket.on("message", (data) => {
+        console.log('data', data);
+
+        // Broadcast the message to all clients
+        io.emit("listen", data);
+    });
+
+    // Handle when a user disconnects
+    socket.on("disconnect", () => {
+        console.log('socket disconnected ', socket.id);
+        // Notify all clients that the user disconnected
+        io.emit("listen", `User disconnected: ${socket.id}`);
+    });
 });
 
 
-/**
- * config the server to listen on the PORT number as provided
- * importing port from .env if port not found in .env file then use default
- */
-const PORT = process.env.PORT | 4000;
-const server = app.listen(PORT, (err) => {
-	if (err) console.log(err);
-	console.log(`app is up and running on port ${PORT}`);
-});
+function getLocalIP() {
+    const interfaces = os.networkInterfaces();
+    for (let name in interfaces) {
+        for (let iface of interfaces[name]) {
+            if (iface.family === 'IPv4' && !iface.internal) {
+                return iface.address;
+            }
+        }
+    }
+    return 'localhost';
+}
 
-const wss = new WebSocket.Server({ server });
-wss.on('connection', function (ws) {
-	console.log('new connection')
+server.listen(port, () => {
+    const ipAddress = getLocalIP();
+    console.log(`Server up on http://${ipAddress}:${port}`);
 });

@@ -1,38 +1,38 @@
+import React, { useState, createContext, useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import axios from 'axios';
-import Auth from './components/Auth';
-import Home from './components/Home';
-import { useEffect, useState } from 'react';
+import Auth from './pages/Auth';
+import Home from './pages/Home';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
+export const AuthContext = createContext();
 
 const App = () => {
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [loggedInUser, SetLoggedInUser] = useState(null);
 
-  // setting up base url in axios
-  axios.defaults.baseURL = 'http://localhost:4000/api/v1/';
+    useEffect(() => {
+        SetLoggedInUser(sessionStorage.getItem('id'));
+    })
 
-  const childCallBack = (data) => {
-    console.log(data);
-    setIsLoggedIn(data);
-  }
+    axios.defaults.baseURL = 'http://localhost:8080/';
+    axios.defaults.headers.common['Authorization'] = `Bearer ${sessionStorage.getItem('token')}`;
 
-  useEffect(() => {
-    const token = sessionStorage.getItem('token');
-    if (token) {
-      setIsLoggedIn(true);
-    }
-  }, []);
-
-
-  return (
-    <div>
-      {!isLoggedIn && (
-        <Auth logInStatus={childCallBack} />
-      )}
-      {isLoggedIn && (
-        <Home />
-      )}
-    </div>
-  );
+    return (
+        <AuthContext.Provider value={loggedInUser}>
+            <div>
+                {!loggedInUser && (
+                    <Auth SetLoggedInUser={SetLoggedInUser} />
+                )}
+                {loggedInUser && (
+                    <Home />
+                )}
+                <ToastContainer />
+            </div>
+        </AuthContext.Provider>
+    )
 }
 
-export default App;
+export default App
