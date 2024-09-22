@@ -15,4 +15,14 @@ router.get('/profile', async (req, res) => {
     }
 });
 
+router.get('/all', async (req, res) => {
+    try {
+        const users = await UserModel.find();
+        return res.status(200).json(users);
+
+    } catch (err) {
+        return res.status(500).json({ error: err.message });
+    }
+});
+
 module.exports = router;

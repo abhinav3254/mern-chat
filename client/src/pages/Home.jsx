@@ -20,6 +20,11 @@ const Home = () => {
             console.log(socket.id); // x8WIv7-mJelg7on_ALbx
         });
 
+        // socket.on("online", (data) => {
+        //     console.log('getting data', data);
+        // })
+
+
     }, []);
 
     const [selectedUser, setSelectedUser] = useState(null);

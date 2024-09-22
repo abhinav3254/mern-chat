@@ -16,7 +16,9 @@ router.post('/register', async (req, res) => {
         var existingUser = await UserModel.findOne({ email: email });
 
         if (!existingUser) {
+            const name = email.split('@')[0];
             const User = new UserModel({
+                name,
                 email,
                 password
             });

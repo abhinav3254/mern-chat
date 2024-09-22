@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import usersJson from '../assets/json/users.json';
+import axios from 'axios';
 
 
 
@@ -9,13 +10,22 @@ const Sidebar = ({ setSelectedUser }) => {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
-        setUsers(usersJson);
+        getAllUsers();
     }, []);
+
+    const getAllUsers = async () => {
+        try {
+            const response = await axios.get('user/all');
+            setUsers(response.data);
+        } catch (err) { }
+    }
 
 
     const trimMessage = (message) => {
-        if (message.length > 20) return message.substring(0, 40) + '...';
-        return message;
+        if (message) {
+            if (message.length > 20) return message.substring(0, 40) + '...';
+            return message;
+        }
     }
 
     const filterNames = () => {
@@ -40,13 +50,27 @@ const Sidebar = ({ setSelectedUser }) => {
             </div>
             <div className='h-[90%] flex flex-col w-full overflow-scroll mt-1'>
                 {filterNames().map((user) => (
-                    <div key={user.id} className='my-[2px] p-1 flex items-center justify-start gap-1 hover:bg-gray-200 bg-gray-100 hover:cursor-pointer shadow-sm' onClick={() => { selectUser(user) }}>
+                    <div key={user._id} className='my-[2px] p-1 flex items-center justify-start gap-1 hover:bg-gray-200 bg-gray-100 hover:cursor-pointer shadow-sm' onClick={() => { selectUser(user) }}>
                         <div className='h-12 w-12'>
-                            <img className='h-full w-full rounded-full object-cover' src={user.profileImg} alt="" />
+                            {/* if profile image is present */}
+                            {user.profileImg && (
+                                <img className='h-full w-full rounded-full object-cover' src={user.profileImg} alt="" />
+                            )}
+                            {/* if profile image is not present */}
+                            {!user.profileImg && (
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-full w-full rounded-full object-cover text-red-500">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+                                </svg>
+                            )}
                         </div>
                         <div className='flex flex-col justify-start'>
                             <p className='text-[16px] text-black font-thin'>{user.name}</p>
-                            <p className='text-[12px] font-light'>{trimMessage(user.message)}</p>
+                            {user.message && (
+                                <p className='text-[12px] font-light'>{trimMessage(user.message)}</p>
+                            )}
+                            {!user.message && (
+                                <p className='text-[12px] font-light'>No messages yet</p>
+                            )}
                         </div>
                     </div>
                 ))}

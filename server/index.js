@@ -29,6 +29,7 @@ const { validateToken } = require('./middlewares/jwt');
 // routes
 const authRoute = require('./routes/auth');
 const userRoute = require('./routes/userRoute');
+const { UserModel } = require('./models/User');
 
 
 app.use(express.json());
