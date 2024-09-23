@@ -17,7 +17,7 @@ const App = () => {
         SetLoggedInUser(sessionStorage.getItem('id'));
     })
 
-    axios.defaults.baseURL = 'http://localhost:8080/';
+    axios.defaults.baseURL = 'http://192.168.31.3:8080';
     axios.defaults.headers.common['Authorization'] = `Bearer ${sessionStorage.getItem('token')}`;
 
     return (

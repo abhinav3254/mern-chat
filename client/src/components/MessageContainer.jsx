@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 
-const MessageContainer = (message) => {
+const MessageContainer = ({ message }) => {
 
-    const [messages, setMessages] = useState([]);
+    console.log('inside message container ', message);
+
 
     return (
         <div>

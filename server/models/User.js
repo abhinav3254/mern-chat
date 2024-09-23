@@ -37,7 +37,8 @@ const User = new mongoose.Schema({
     chatHistory: [{
         type: mongoose.Schema.Types.ObjectId, // Array of chat message IDs
         ref: 'messages'
-    }]
+    }],
+    message: String,
 }, { timestamps: true });
 
 const UserModel = mongoose.model('users', User);

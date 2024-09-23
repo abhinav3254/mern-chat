@@ -13,7 +13,7 @@ const SelectedUserNav = () => {
                     <img className='h-10 w-10 mr-1 rounded-full' src={selectedUser.profileImg} alt="" />
                     <div className='flex flex-col ml-1'>
                         <p className='text-[18px] font-thin'>{selectedUser.name}</p>
-                        <p className='text-[10px] text-green-500'>Online</p>
+                        <p className='text-[10px] text-green-500'>{selectedUser.status}</p>
                     </div>
                 </div>
             )}

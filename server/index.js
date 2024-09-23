@@ -6,6 +6,8 @@ const os = require('os');
 const { delayRequest } = require('./middlewares/delay');
 const { parseToken } = require('./middlewares/jwt');
 
+const MessageModel = require('./models/MessageModel');
+
 const http = require('http');
 const server = http.createServer(app);
 
@@ -29,12 +31,13 @@ const { validateToken } = require('./middlewares/jwt');
 // routes
 const authRoute = require('./routes/auth');
 const userRoute = require('./routes/userRoute');
+const chatRoute = require('./routes/chatRoute');
 const { UserModel } = require('./models/User');
 
 
 app.use(express.json());
 app.use(cors({
-    origin: 'http://localhost:3000', // Specify the origin to allow
+    origin: '*', // Specify the origin to allow
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Add other methods if needed
     allowedHeaders: ['Content-Type', 'Authorization'], // Allow required headers
     credentials: true // If you're handling credentials (cookies, HTTP authentication)
@@ -45,6 +48,7 @@ app.use(cors({
 
 app.use('/auth', authRoute);
 app.use('/user', validateToken, userRoute);
+app.use('/chat', validateToken, chatRoute);
 
 const activeUsers = [];
 
@@ -72,11 +76,20 @@ io.on("connection", (socket) => {
     io.emit("activeUsers", activeUsers);
 
     // When a message is received from a client
-    socket.on("message", (data) => {
-        console.log('data', data);
-
+    socket.on("message", async (data) => {
+        const message = new MessageModel({
+            recipient: data.recipient,
+            sender: data.sender,
+            message: data.message,
+            time: data.time
+        });
+        const savedMessage = await message.save();
         // Broadcast the message to all clients
-        io.emit("listen", data);
+        const recipientUser = activeUsers.find(user => user.userId === data.recipient);
+        if (recipientUser) {
+            // Emit the message to the specific recipient
+            io.to(recipientUser.socketId).emit("listen", data);
+        }
     });
 
     // Handle when a user disconnects
